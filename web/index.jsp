@@ -1,4 +1,3 @@
-<%@ page errorPage="error.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -55,11 +54,6 @@
         </c:forEach>
     </table>
 </c:if>
-
-<c:if test="${not empty error}">
-    ${error}
-</c:if>
-
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 package com.savko.fifth.constant;
 
-public class Tags {
+public class XmlTags {
 
     public static final String BANK = "bank";
     public static final String DEPOSIT = "deposit";

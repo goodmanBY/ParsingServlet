@@ -1,9 +1,11 @@
 package com.savko.servlet;
 
 import com.savko.fifth.command.Command;
+import com.savko.fifth.constant.JspAttributes;
 import com.savko.fifth.entity.Bank;
 import com.savko.fifth.exception.ParsingException;
 import com.savko.fifth.holdel.CommandHolder;
+import com.savko.fifth.util.FileUploader;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -18,35 +20,28 @@ import java.io.*;
 public class ParsingServlet extends HttpServlet {
 
     private final static Logger LOGGER = Logger.getLogger(ParsingServlet.class);
-    private static final String UPLOAD_DIRECTORY = "F:\\uploads";
+    private static final String UPLOAD_DIRECTORY = "F:\\WebParsingXml\\Uploads";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String parserType = request.getParameter("parserType");
+        String parserType = request.getParameter(JspAttributes.PARSER_TYPE_PARAMETER);
         Command command = CommandHolder.getInstance().getCommand(parserType);
 
         try {
-            Part filePart = request.getPart("file");
+            Part filePart = request.getPart(JspAttributes.FILE_PART);
             String name = filePart.getSubmittedFileName();
             String filePath = UPLOAD_DIRECTORY + File.separator + name;
             InputStream fileContent = filePart.getInputStream();
-            OutputStream out = new FileOutputStream(new File(filePath));
-            int read;
-            final byte[] bytes = new byte[1024];
-
-            while ((read = fileContent.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }
-
-            LOGGER.info("TEST");
-
+            FileUploader.upload(filePath, fileContent);
             Bank bank = command.parse(filePath);
-            request.setAttribute("bank", bank);
-            request.setAttribute("type", parserType);
+            request.setAttribute(JspAttributes.BANK, bank);
+            request.setAttribute(JspAttributes.TYPE, parserType);
 
         } catch (ParsingException e) {
-            request.setAttribute("error", "Error!");
-        } catch (Exception ex) {
-            request.setAttribute("error", "File Upload Failed due to " + ex);
+            LOGGER.error("Parsing error." + e);
+            throw new ServletException("Parsing error.", e);
+        } catch (Exception e) {
+            LOGGER.error("File Upload Failed due to " + e);
+            throw new ServletException("File Upload Failed", e);
         }
 
         request.getRequestDispatcher("/index.jsp").forward(request, response);

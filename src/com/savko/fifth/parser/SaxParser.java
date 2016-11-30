@@ -1,6 +1,6 @@
 package com.savko.fifth.parser;
 
-import com.savko.fifth.constant.Tags;
+import com.savko.fifth.constant.XmlTags;
 import com.savko.fifth.entity.Bank;
 import com.savko.fifth.entity.Deposit;
 import com.savko.fifth.entity.DepositType;
@@ -24,10 +24,10 @@ public class SaxParser extends DefaultHandler {
                              Attributes attr) {
         currentTag = qName;
         switch (qName) {
-            case Tags.BANK:
+            case XmlTags.BANK:
                 bank = new Bank();
                 break;
-            case Tags.DEPOSIT:
+            case XmlTags.DEPOSIT:
                 deposit = new Deposit();
                 deposit.setDepositId(Integer.parseInt(attr.getValue(0)));
                 break;
@@ -37,28 +37,28 @@ public class SaxParser extends DefaultHandler {
     public void characters(char[] buf, int start, int length) {
         String value = new String(buf, start, length);
         switch (currentTag) {
-            case Tags.BANK_NAME:
+            case XmlTags.BANK_NAME:
                 deposit.setBankName(value);
                 break;
-            case Tags.COUNTRY:
+            case XmlTags.COUNTRY:
                 deposit.setCountry(value);
                 break;
-            case Tags.DEPOSIT_TYPE:
+            case XmlTags.DEPOSIT_TYPE:
                 deposit.setDepositType(DepositType.getEnumValue(value));
                 break;
-            case Tags.DEPOSITOR:
+            case XmlTags.DEPOSITOR:
                 deposit.setDepositor(value);
                 break;
-            case Tags.ACCOUNT_ID:
+            case XmlTags.ACCOUNT_ID:
                 deposit.setAccountId(Integer.parseInt(value));
                 break;
-            case Tags.AMOUNT:
+            case XmlTags.AMOUNT:
                 deposit.setAmount(Integer.parseInt(value));
                 break;
-            case Tags.PROFITABILITY:
+            case XmlTags.PROFITABILITY:
                 deposit.setProfitability(Integer.parseInt(value));
                 break;
-            case Tags.TIME_CONSTRAINTS:
+            case XmlTags.TIME_CONSTRAINTS:
                 deposit.setTimeConstraints(Integer.parseInt(value));
                 break;
         }
@@ -66,7 +66,7 @@ public class SaxParser extends DefaultHandler {
 
     public void endElement(String uri, String localName, String qName) {
         switch (qName) {
-            case Tags.DEPOSIT: {
+            case XmlTags.DEPOSIT: {
                 bank.addDeposit(deposit);
             }
         }

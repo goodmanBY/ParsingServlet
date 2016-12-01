@@ -1,6 +1,6 @@
 package com.savko.fifth.constant;
 
-public class XmlAttributes {
+public class XmlAttribute {
 
     public static final String ID = "id";
 

@@ -1,7 +1,7 @@
 package com.savko.fifth.parser;
 
-import com.savko.fifth.constant.XmlAttributes;
-import com.savko.fifth.constant.XmlTags;
+import com.savko.fifth.constant.XmlAttribute;
+import com.savko.fifth.constant.XmlTag;
 import com.savko.fifth.entity.Bank;
 import com.savko.fifth.entity.Deposit;
 import com.savko.fifth.entity.DepositType;
@@ -32,7 +32,7 @@ public class DomParser {
 
             doc.getDocumentElement().normalize();
 
-            NodeList nList = doc.getElementsByTagName(XmlTags.DEPOSIT);
+            NodeList nList = doc.getElementsByTagName(XmlTag.DEPOSIT);
 
             for (int i = 0; i < nList.getLength(); i++) {
 
@@ -41,22 +41,22 @@ public class DomParser {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element eElement = (Element) nNode;
-                    deposit.setDepositId(Integer.parseInt(eElement.getAttribute(XmlAttributes.ID)));
-                    deposit.setBankName(eElement.getElementsByTagName(XmlTags.BANK_NAME)
+                    deposit.setDepositId(Integer.parseInt(eElement.getAttribute(XmlAttribute.ID)));
+                    deposit.setBankName(eElement.getElementsByTagName(XmlTag.BANK_NAME)
                             .item(0).getTextContent());
-                    deposit.setCountry(eElement.getElementsByTagName(XmlTags.COUNTRY)
+                    deposit.setCountry(eElement.getElementsByTagName(XmlTag.COUNTRY)
                             .item(0).getTextContent());
-                    deposit.setDepositType((DepositType.getEnumValue(eElement.getElementsByTagName(XmlTags.DEPOSIT_TYPE)
+                    deposit.setDepositType((DepositType.getEnumValue(eElement.getElementsByTagName(XmlTag.DEPOSIT_TYPE)
                             .item(0).getTextContent())));
-                    deposit.setDepositor(eElement.getElementsByTagName(XmlTags.DEPOSITOR)
+                    deposit.setDepositor(eElement.getElementsByTagName(XmlTag.DEPOSITOR)
                             .item(0).getTextContent());
-                    deposit.setAccountId(Integer.parseInt(eElement.getElementsByTagName(XmlTags.ACCOUNT_ID)
+                    deposit.setAccountId(Integer.parseInt(eElement.getElementsByTagName(XmlTag.ACCOUNT_ID)
                             .item(0).getTextContent()));
-                    deposit.setAmount(Integer.parseInt(eElement.getElementsByTagName(XmlTags.AMOUNT)
+                    deposit.setAmount(Integer.parseInt(eElement.getElementsByTagName(XmlTag.AMOUNT)
                             .item(0).getTextContent()));
-                    deposit.setProfitability(Integer.parseInt(eElement.getElementsByTagName(XmlTags.PROFITABILITY)
+                    deposit.setProfitability(Integer.parseInt(eElement.getElementsByTagName(XmlTag.PROFITABILITY)
                             .item(0).getTextContent()));
-                    deposit.setTimeConstraints(Integer.parseInt(eElement.getElementsByTagName(XmlTags.TIME_CONSTRAINTS)
+                    deposit.setTimeConstraints(Integer.parseInt(eElement.getElementsByTagName(XmlTag.TIME_CONSTRAINTS)
                             .item(0).getTextContent()));
                 }
                 bank.addDeposit(deposit);

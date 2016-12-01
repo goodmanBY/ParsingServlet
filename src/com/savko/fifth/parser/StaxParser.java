@@ -1,6 +1,6 @@
 package com.savko.fifth.parser;
 
-import com.savko.fifth.constant.XmlTags;
+import com.savko.fifth.constant.XmlTag;
 import com.savko.fifth.entity.Bank;
 import com.savko.fifth.entity.Deposit;
 import com.savko.fifth.entity.DepositType;
@@ -42,10 +42,10 @@ public class StaxParser {
                 switch (event) {
 
                     case XMLStreamConstants.START_ELEMENT:
-                        if (XmlTags.BANK.equals(reader.getLocalName())) {
+                        if (XmlTag.BANK.equals(reader.getLocalName())) {
                             bank = new Bank();
                         }
-                        if (XmlTags.DEPOSIT.equals(reader.getLocalName())) {
+                        if (XmlTag.DEPOSIT.equals(reader.getLocalName())) {
                             deposit = new Deposit();
                             deposit.setDepositId(Integer.parseInt(reader.getAttributeValue(0)));
                         }
@@ -56,31 +56,31 @@ public class StaxParser {
                         break;
                     case XMLStreamConstants.END_ELEMENT:
                         switch (reader.getLocalName()) {
-                            case XmlTags.DEPOSIT:
+                            case XmlTag.DEPOSIT:
                                 bank.addDeposit(deposit);
                                 break;
-                            case XmlTags.BANK_NAME:
+                            case XmlTag.BANK_NAME:
                                 deposit.setBankName(currentTag);
                                 break;
-                            case XmlTags.COUNTRY:
+                            case XmlTag.COUNTRY:
                                 deposit.setCountry(currentTag);
                                 break;
-                            case XmlTags.DEPOSIT_TYPE:
+                            case XmlTag.DEPOSIT_TYPE:
                                 deposit.setDepositType(DepositType.getEnumValue(currentTag));
                                 break;
-                            case XmlTags.DEPOSITOR:
+                            case XmlTag.DEPOSITOR:
                                 deposit.setDepositor(currentTag);
                                 break;
-                            case XmlTags.ACCOUNT_ID:
+                            case XmlTag.ACCOUNT_ID:
                                 deposit.setAccountId(Integer.parseInt(currentTag));
                                 break;
-                            case XmlTags.AMOUNT:
+                            case XmlTag.AMOUNT:
                                 deposit.setAmount(Integer.parseInt(currentTag));
                                 break;
-                            case XmlTags.PROFITABILITY:
+                            case XmlTag.PROFITABILITY:
                                 deposit.setProfitability(Integer.parseInt(currentTag));
                                 break;
-                            case XmlTags.TIME_CONSTRAINTS:
+                            case XmlTag.TIME_CONSTRAINTS:
                                 deposit.setTimeConstraints(Integer.parseInt(currentTag));
                                 break;
                         }

@@ -45,7 +45,7 @@ public class ParsingServlet extends HttpServlet {
             throw new ServletException("File Upload Failed", e);
         }
 
-        request.getRequestDispatcher(JspConstant.PATH_PAGE_MAIN).forward(request, response);
+        request.getRequestDispatcher("/out.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
